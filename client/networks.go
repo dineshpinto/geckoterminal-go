@@ -3,7 +3,6 @@ package client
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/url"
 	"strconv"
 	"time"
@@ -129,13 +128,11 @@ func (c *Client) Networks(page int) ([]Network, error) {
 	params.Add("page", strconv.Itoa(page))
 	body, err := c.get("networks/", params)
 	if err != nil {
-		log.Fatal(err)
 		return nil, err
 	}
-	jsonBody := Response[Network]{}
+	jsonBody := response[Network]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
-		log.Fatal(jsonErr)
 		return nil, jsonErr
 	}
 	return jsonBody.Data, nil
@@ -156,13 +153,11 @@ func (c *Client) NetworkDexes(network string, page int) ([]Dex, error) {
 	params.Add("page", strconv.Itoa(page))
 	body, err := c.get(fmt.Sprintf("networks/%s/dexes/", network), params)
 	if err != nil {
-		log.Fatal(err)
 		return nil, err
 	}
-	jsonBody := Response[Dex]{}
+	jsonBody := response[Dex]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
-		log.Fatal(jsonErr)
 		return nil, jsonErr
 	}
 	return jsonBody.Data, nil
@@ -183,13 +178,11 @@ func (c *Client) TrendingPools(page int) ([]Pool, error) {
 	params.Add("page", strconv.Itoa(page))
 	body, err := c.get("networks/trending_pools/", params)
 	if err != nil {
-		log.Fatal(err)
 		return nil, err
 	}
-	jsonBody := Response[Pool]{}
+	jsonBody := response[Pool]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
-		log.Fatal(jsonErr)
 		return nil, jsonErr
 	}
 	return jsonBody.Data, nil
@@ -211,13 +204,11 @@ func (c *Client) NetworkTrendingPools(network string, page int) ([]Pool, error) 
 	params.Add("page", strconv.Itoa(page))
 	body, err := c.get(fmt.Sprintf("networks/%s/trending_pools/", network), params)
 	if err != nil {
-		log.Fatal(err)
 		return nil, err
 	}
-	jsonBody := Response[Pool]{}
+	jsonBody := response[Pool]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
-		log.Fatal(jsonErr)
 		return nil, jsonErr
 	}
 	return jsonBody.Data, nil

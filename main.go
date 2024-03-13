@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	c := client.NewClient()
+	c := client.GeckoTerminalClient()
 	c.NetworkTrendingPools("eth", 1)
 }

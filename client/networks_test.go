@@ -5,8 +5,8 @@ import (
 )
 
 func TestNetworks(t *testing.T) {
-	c := NewClient()
-	data, _ := c.Networks(1)
+	gt := GeckoTerminalClient()
+	data, _ := gt.Networks(1)
 
 	if data[0].Type != "network" {
 		t.Error("Expected 'network', got", data[0].Type)
@@ -17,8 +17,8 @@ func TestNetworks(t *testing.T) {
 }
 
 func TestNetworkDexes(t *testing.T) {
-	c := NewClient()
-	data, _ := c.NetworkDexes("eth", 1)
+	gt := GeckoTerminalClient()
+	data, _ := gt.NetworkDexes("eth", 1)
 
 	if data[0].Type != "dex" {
 		t.Error("Expected 'dex', got", data[0].Type)
@@ -29,8 +29,8 @@ func TestNetworkDexes(t *testing.T) {
 }
 
 func TestTrendingPools(t *testing.T) {
-	c := NewClient()
-	data, _ := c.TrendingPools(1)
+	gt := GeckoTerminalClient()
+	data, _ := gt.TrendingPools(1)
 
 	if data[0].Type != "pool" {
 		t.Error("Expected 'pool', got", data[0].Type)
@@ -38,8 +38,8 @@ func TestTrendingPools(t *testing.T) {
 }
 
 func TestClient_NetworkTrendingPools(t *testing.T) {
-	c := NewClient()
-	data, _ := c.NetworkTrendingPools("eth", 1)
+	gt := GeckoTerminalClient()
+	data, _ := gt.NetworkTrendingPools("eth", 1)
 
 	if data[0].Type != "pool" {
 		t.Error("Expected 'pool', got", data[0].Type)
