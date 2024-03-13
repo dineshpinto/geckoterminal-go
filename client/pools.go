@@ -149,6 +149,16 @@ func (c *Client) NetworkTrendingPools(network string, page int) ([]Pool, error) 
 	return jsonBody.Data, nil
 }
 
+// NetworkPoolAddress retrieves the pool for a specific network and address.
+// It makes a GET request to the "networks/{network}/pools/{address}" endpoint of the API.
+//
+// Parameters:
+//   - network: The ID of the network for which to retrieve the pool.
+//   - address: The address of the pool to be retrieved.
+//
+// Returns:
+//   - A Pool struct, representing the pool for the given address in the network.
+//   - An error if the GET request or the JSON unmarshalling fails.
 func (c *Client) NetworkPoolAddress(network string, address string) (Pool, error) {
 	params := url.Values{}
 	params.Add("include", "base_token,quote_token,dex")
@@ -164,6 +174,16 @@ func (c *Client) NetworkPoolAddress(network string, address string) (Pool, error
 	return jsonBody.Data, nil
 }
 
+// NetworkPoolMultiAddress retrieves the pools for a specific network and multiple addresses.
+// It makes a GET request to the "networks/{network}/pools/multi/{addresses}" endpoint of the API.
+//
+// Parameters:
+//   - network: The ID of the network for which to retrieve the pools.
+//   - address: A slice of addresses for which to retrieve the pools.
+//
+// Returns:
+//   - A slice of Pool structs, each representing a pool for the given addresses in the network.
+//   - An error if the GET request or the JSON unmarshalling fails.
 func (c *Client) NetworkPoolMultiAddress(network string, address []string) ([]Pool, error) {
 	params := url.Values{}
 	params.Add("include", "base_token,quote_token,dex")
@@ -179,6 +199,16 @@ func (c *Client) NetworkPoolMultiAddress(network string, address []string) ([]Po
 	return jsonBody.Data, nil
 }
 
+// NetworkPools retrieves the pools for a specific network.
+// It makes a GET request to the "networks/{network}/pools/" endpoint of the API.
+//
+// Parameters:
+//   - network: The ID of the network for which to retrieve the pools.
+//   - page: The page number for pagination. Each page returns a certain number of pools.
+//
+// Returns:
+//   - A slice of Pool structs, each representing a pool in the network.
+//   - An error if the GET request or the JSON unmarshalling fails.
 func (c *Client) NetworkPools(network string, page int) ([]Pool, error) {
 	params := url.Values{}
 	params.Add("include", "base_token,quote_token,dex")
@@ -195,6 +225,17 @@ func (c *Client) NetworkPools(network string, page int) ([]Pool, error) {
 	return jsonBody.Data, nil
 }
 
+// NetworkDexPools retrieves the pools for a specific network and dex.
+// It makes a GET request to the "networks/{network}/dexes/{dex}/pools/" endpoint of the API.
+//
+// Parameters:
+//   - network: The ID of the network for which to retrieve the pools.
+//   - dex: The ID of the dex for which to retrieve the pools.
+//   - page: The page number for pagination. Each page returns a certain number of pools.
+//
+// Returns:
+//   - A slice of Pool structs, each representing a pool in the dex of the network.
+//   - An error if the GET request or the JSON unmarshalling fails.
 func (c *Client) NetworkDexPools(network string, dex string, page int) ([]Pool, error) {
 	params := url.Values{}
 	params.Add("include", "base_token,quote_token,dex")
@@ -211,6 +252,16 @@ func (c *Client) NetworkDexPools(network string, dex string, page int) ([]Pool, 
 	return jsonBody.Data, nil
 }
 
+// NetworkNewPools retrieves the new pools for a specific network.
+// It makes a GET request to the "networks/{network}/new_pools/" endpoint of the API.
+//
+// Parameters:
+//   - network: The ID of the network for which to retrieve the new pools.
+//   - page: The page number for pagination. Each page returns a certain number of new pools.
+//
+// Returns:
+//   - A slice of Pool structs, each representing a new pool in the network.
+//   - An error if the GET request or the JSON unmarshalling fails.
 func (c *Client) NetworkNewPools(network string, page int) ([]Pool, error) {
 	params := url.Values{}
 	params.Add("include", "base_token,quote_token,dex")

@@ -29,6 +29,17 @@ type Trade struct {
 	} `json:"attributes"`
 }
 
+// NetworkPoolTrades retrieves the trades for a specific pool in a network.
+// It makes a GET request to the "networks/{network}/pools/{poolAddress}/trades" endpoint of the API.
+//
+// Parameters:
+//   - network: The ID of the network for which to retrieve the trades.
+//   - poolAddress: The address of the pool for which to retrieve the trades.
+//   - tradeVolumeInUsdGreaterThan: The minimum trade volume in USD for the trades to be retrieved.
+//
+// Returns:
+//   - A slice of Trade structs, each representing a trade in the pool.
+//   - An error if the GET request or the JSON unmarshalling fails.
 func (c *Client) NetworkPoolTrades(network string, poolAddress string, tradeVolumeInUsdGreaterThan int) ([]Trade, error) {
 	params := url.Values{}
 	params.Add("trade_volume_in_usd_greater_than", strconv.Itoa(tradeVolumeInUsdGreaterThan))
