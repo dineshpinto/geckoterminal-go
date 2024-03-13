@@ -19,7 +19,7 @@ type links struct {
 	Last  string `json:"last"`
 }
 
-type response[T []Network | []Dex | []Pool | Pool | TokenPrice] struct {
+type response[T []Network | []Dex | []Pool | []Trade | Pool | TokenPrice] struct {
 	Data  T     `json:"data"`
 	Links links `json:"links"`
 }
