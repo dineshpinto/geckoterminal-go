@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/url"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -130,7 +131,7 @@ func (c *Client) Networks(page int) ([]Network, error) {
 	if err != nil {
 		return nil, err
 	}
-	jsonBody := response[Network]{}
+	jsonBody := response[[]Network]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
 		return nil, jsonErr
@@ -155,7 +156,7 @@ func (c *Client) NetworkDexes(network string, page int) ([]Dex, error) {
 	if err != nil {
 		return nil, err
 	}
-	jsonBody := response[Dex]{}
+	jsonBody := response[[]Dex]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
 		return nil, jsonErr
@@ -174,13 +175,13 @@ func (c *Client) NetworkDexes(network string, page int) ([]Dex, error) {
 //   - An error if the GET request or the JSON unmarshalling fails.
 func (c *Client) TrendingPools(page int) ([]Pool, error) {
 	params := url.Values{}
-	params.Add("include", "base_token,quote_token,Dex,Network")
+	params.Add("include", "base_token,quote_token,dex,network")
 	params.Add("page", strconv.Itoa(page))
 	body, err := c.get("networks/trending_pools/", params)
 	if err != nil {
 		return nil, err
 	}
-	jsonBody := response[Pool]{}
+	jsonBody := response[[]Pool]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
 		return nil, jsonErr
@@ -200,13 +201,59 @@ func (c *Client) TrendingPools(page int) ([]Pool, error) {
 //   - An error if the GET request or the JSON unmarshalling fails.
 func (c *Client) NetworkTrendingPools(network string, page int) ([]Pool, error) {
 	params := url.Values{}
-	params.Add("include", "base_token,quote_token,Dex")
+	params.Add("include", "base_token,quote_token,dex")
 	params.Add("page", strconv.Itoa(page))
 	body, err := c.get(fmt.Sprintf("networks/%s/trending_pools/", network), params)
 	if err != nil {
 		return nil, err
 	}
+	jsonBody := response[[]Pool]{}
+	jsonErr := json.Unmarshal(body, &jsonBody)
+	if jsonErr != nil {
+		return nil, jsonErr
+	}
+	return jsonBody.Data, nil
+}
+
+func (c *Client) NetworkPoolAddress(network string, address string) (Pool, error) {
+	params := url.Values{}
+	params.Add("include", "base_token,quote_token,dex")
+	body, err := c.get(fmt.Sprintf("networks/%s/pools/%s", network, address), params)
+	if err != nil {
+		return Pool{}, err
+	}
 	jsonBody := response[Pool]{}
+	jsonErr := json.Unmarshal(body, &jsonBody)
+	if jsonErr != nil {
+		return Pool{}, jsonErr
+	}
+	return jsonBody.Data, nil
+}
+
+func (c *Client) NetworkPoolMultiAddress(network string, address []string) ([]Pool, error) {
+	params := url.Values{}
+	params.Add("include", "base_token,quote_token,dex")
+	body, err := c.get(fmt.Sprintf("networks/%s/pools/multi/%s", network, strings.Join(address, ",")), params)
+	if err != nil {
+		return nil, err
+	}
+	jsonBody := response[[]Pool]{}
+	jsonErr := json.Unmarshal(body, &jsonBody)
+	if jsonErr != nil {
+		return nil, jsonErr
+	}
+	return jsonBody.Data, nil
+}
+
+func (c *Client) NetworkPools(network string, page int) ([]Pool, error) {
+	params := url.Values{}
+	params.Add("include", "base_token,quote_token,dex")
+	params.Add("page", strconv.Itoa(page))
+	body, err := c.get(fmt.Sprintf("networks/%s/pools/", network), params)
+	if err != nil {
+		return nil, err
+	}
+	jsonBody := response[[]Pool]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
 		return nil, jsonErr
