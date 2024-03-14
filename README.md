@@ -22,3 +22,34 @@ find.
 ```bash
 go install github.com/dineshpinto/geckoterminal-go
 ```
+
+## Examples
+
+```go
+package main
+
+import (
+	"fmt"
+	"log"
+
+	"github.com/dineshpinto/geckoterminal-go/syncclient"
+)
+
+func main() {
+	gt := syncclient.NewClient()
+	
+	// Get list of networks
+	networks, err := gt.Networks(1)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(networks)
+	
+	// Get list of trending pools on a network
+	pools, err := gt.NetworkTrendingPools("solana", 1)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(pools)
+}
+```
