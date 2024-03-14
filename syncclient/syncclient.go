@@ -19,9 +19,29 @@ type links struct {
 	Last  string `json:"last"`
 }
 
+type meta struct {
+	Base struct {
+		Address         string `json:"address"`
+		Name            string `json:"name"`
+		Symbol          string `json:"symbol"`
+		CoingeckoCoinId string `json:"coingecko_coin_id"`
+	} `json:"base"`
+	Quote struct {
+		Address         string `json:"address"`
+		Name            string `json:"name"`
+		Symbol          string `json:"symbol"`
+		CoingeckoCoinId string `json:"coingecko_coin_id"`
+	} `json:"quote"`
+}
+
 type response[T []Network | []Dex | []Pool | []Trade | Pool | TokenPrice] struct {
 	Data  T     `json:"data"`
 	Links links `json:"links"`
+}
+
+type responseOHLCVS struct {
+	Data OHLCVS `json:"data"`
+	Meta meta   `json:"meta"`
 }
 
 func GeckoTerminalClient() *Client {
