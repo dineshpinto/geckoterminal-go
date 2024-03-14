@@ -3,7 +3,7 @@ package syncclient
 import "testing"
 
 func TestClient_NetworkDexes(t *testing.T) {
-	gt := GeckoTerminalClient()
+	gt := NewClient()
 	data, _ := gt.NetworkDexes("eth", 1)
 
 	if data[0].Type != "dex" {

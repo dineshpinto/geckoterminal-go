@@ -34,7 +34,11 @@ type meta struct {
 	} `json:"quote"`
 }
 
-type response[T []Network | []Dex | []Pool | []Trade | Pool | TokenPrice] struct {
+type data interface {
+	[]Network | []Dex | []Pool | []Trade | []Token | Pool | TokenPrice | Token | []TokenInfo | TokenInfo
+}
+
+type response[T data] struct {
 	Data  T     `json:"data"`
 	Links links `json:"links"`
 }
@@ -44,7 +48,7 @@ type responseOHLCVS struct {
 	Meta meta   `json:"meta"`
 }
 
-func GeckoTerminalClient() *Client {
+func NewClient() *Client {
 	return &Client{
 		baseUrl:    "https://api.geckoterminal.com/api/v2/",
 		httpClient: http.DefaultClient,

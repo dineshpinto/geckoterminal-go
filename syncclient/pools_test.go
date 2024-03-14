@@ -3,7 +3,7 @@ package syncclient
 import "testing"
 
 func TestClient_TrendingPools(t *testing.T) {
-	gt := GeckoTerminalClient()
+	gt := NewClient()
 	data, _ := gt.TrendingPools(1)
 
 	if data[0].Type != "pool" {
@@ -12,7 +12,7 @@ func TestClient_TrendingPools(t *testing.T) {
 }
 
 func TestClient_NetworkTrendingPools(t *testing.T) {
-	gt := GeckoTerminalClient()
+	gt := NewClient()
 	data, _ := gt.NetworkTrendingPools("eth", 1)
 
 	if data[0].Type != "pool" {
@@ -21,7 +21,7 @@ func TestClient_NetworkTrendingPools(t *testing.T) {
 }
 
 func TestClient_NetworkPoolAddress(t *testing.T) {
-	gt := GeckoTerminalClient()
+	gt := NewClient()
 	data, _ := gt.NetworkPoolAddress("eth", "0x60594a405d53811d3bc4766596efd80fd545a270")
 
 	if data.Type != "pool" {
@@ -33,7 +33,7 @@ func TestClient_NetworkPoolAddress(t *testing.T) {
 }
 
 func TestClient_NetworkPoolMultiAddress(t *testing.T) {
-	gt := GeckoTerminalClient()
+	gt := NewClient()
 	addresses := []string{"0x60594a405d53811d3bc4766596efd80fd545a270", "0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640"}
 	data, _ := gt.NetworkPoolMultiAddress("eth", addresses)
 
@@ -52,7 +52,7 @@ func TestClient_NetworkPoolMultiAddress(t *testing.T) {
 }
 
 func TestClient_NetworkPools(t *testing.T) {
-	gt := GeckoTerminalClient()
+	gt := NewClient()
 	data, _ := gt.NetworkPools("eth", 1)
 
 	if data[0].Type != "pool" {
@@ -61,7 +61,7 @@ func TestClient_NetworkPools(t *testing.T) {
 }
 
 func TestClient_NetworkDexPools(t *testing.T) {
-	gt := GeckoTerminalClient()
+	gt := NewClient()
 	data, _ := gt.NetworkDexPools("eth", "sushiswap", 1)
 
 	if data[0].Type != "pool" {
@@ -73,7 +73,7 @@ func TestClient_NetworkDexPools(t *testing.T) {
 }
 
 func TestClient_NetworkNewPools(t *testing.T) {
-	gt := GeckoTerminalClient()
+	gt := NewClient()
 	data, _ := gt.NetworkNewPools("eth", 1)
 
 	if data[0].Type != "pool" {

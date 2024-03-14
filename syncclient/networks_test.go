@@ -5,7 +5,7 @@ import (
 )
 
 func TestClient_Networks(t *testing.T) {
-	gt := GeckoTerminalClient()
+	gt := NewClient()
 	data, _ := gt.Networks(1)
 
 	if data[0].Type != "network" {
