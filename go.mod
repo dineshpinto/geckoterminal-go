@@ -1,3 +1,3 @@
-module  geckoterminal-go
+module  github.com/dineshpinto/geckoterminal-go
 
 go 1.22

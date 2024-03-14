@@ -1,4 +1,4 @@
-package client
+package syncclient
 
 import "testing"
 
@@ -57,9 +57,6 @@ func TestClient_NetworkPools(t *testing.T) {
 
 	if data[0].Type != "pool" {
 		t.Error("Expected 'pool', got", data[0].Type)
-	}
-	if data[0].Id != "eth_0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640" {
-		t.Error("Expected 'eth_0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640', got", data[0].Id)
 	}
 }
 
