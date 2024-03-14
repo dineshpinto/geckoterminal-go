@@ -20,15 +20,32 @@ type OHLCVS struct {
 type NetworkPoolOHLCVArgs struct {
 	Network     string
 	PoolAddress string
-	Timeframe   string // "minute", "hour", "day"
+	Timeframe   string
 	// Optional parameters
-	Aggregate       int    // 1, 5, 15 for minute, 1, 4, 12 for hour, 1 for day (default 1)
-	BeforeTimestamp int64  // Unix timestamp (default now)
-	Limit           int    // Number of OHLCVs to return (default 100)
-	Currency        string // "usd", "token" (default "usd")
-	Token           string // "base", "quote" (default "base")
+	Aggregate       int
+	BeforeTimestamp int64
+	Limit           int
+	Currency        string
+	Token           string
 }
 
+// NetworkPoolOHLCV retrieves the OHLCV (Open, High, Low, Close, Volume) data for a specific pool in a network.
+// It makes a GET request to the "networks/{network}/pools/{poolAddress}/ohlcv/{timeframe}" endpoint of the API.
+//
+// Parameters:
+//   - args: A struct of NetworkPoolOHLCVArgs which includes:
+//   - Network: The ID of the network for which to retrieve the OHLCV data.
+//   - PoolAddress: The address of the pool for which to retrieve the OHLCV data.
+//   - Timeframe: The timeframe for the OHLCV data ("minute", "hour", "day").
+//   - Aggregate: The aggregate level for the OHLCV data 1, 5, 15 for minute, 1, 4, 12 for hour, 1 for day (default 1).
+//   - BeforeTimestamp: The Unix timestamp before which to retrieve the OHLCV data (default now).
+//   - Limit: The number of OHLCVs to return (default 100).
+//   - Currency: The currency for the OHLCV data ("usd", "token") (default "usd").
+//   - Token: The token for the OHLCV data ("base", "quote") (default "base").
+//
+// Returns:
+//   - An OHLCVS struct, representing the OHLCV data for the given pool in the network.
+//   - An error if the GET request or the JSON unmarshalling fails.
 func (c *Client) NetworkPoolOHLCV(args NetworkPoolOHLCVArgs) (OHLCVS, error) {
 	if args.Network == "" {
 		return OHLCVS{}, fmt.Errorf("network is required")
