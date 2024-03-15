@@ -24,17 +24,17 @@ type Network struct {
 // Returns:
 //   - A slice of Network structs, each representing a network.
 //   - An error if the GET request or the JSON unmarshalling fails.
-func (c *Client) Networks(page int) ([]Network, error) {
+func (c *Client) Networks(page int) (Response[[]Network], error) {
 	params := url.Values{}
 	params.Add("page", strconv.Itoa(page))
 	body, err := c.get("networks/", params)
 	if err != nil {
-		return nil, err
+		return Response[[]Network]{}, err
 	}
-	jsonBody := response[[]Network]{}
+	jsonBody := Response[[]Network]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
-		return nil, jsonErr
+		return Response[[]Network]{}, jsonErr
 	}
-	return jsonBody.Data, nil
+	return jsonBody, nil
 }

@@ -32,7 +32,7 @@ type Token struct {
 			Data []struct {
 				Id   string `json:"id"`
 				Type string `json:"type"`
-			} `json:"data"`
+			} `json:"DataTypes"`
 		} `json:"top_pools"`
 	} `json:"relationships"`
 }
@@ -66,21 +66,21 @@ type TokenInfo struct {
 // Returns:
 //   - A slice of Pool structs, each representing a pool in the network for the given token.
 //   - An error if the GET request or the JSON unmarshalling fails.
-func (c *Client) NetworkTokenPools(network string, tokenAddress string, page int) ([]Pool, error) {
+func (c *Client) NetworkTokenPools(network string, tokenAddress string, page int) (Response[[]Pool], error) {
 	params := url.Values{}
 	params.Add("page", strconv.Itoa(page))
 	params.Add("include", "base_token,quote_token,dex")
 
 	body, err := c.get(fmt.Sprintf("networks/%s/tokens/%s/pools/", network, tokenAddress), params)
 	if err != nil {
-		return nil, err
+		return Response[[]Pool]{}, err
 	}
-	jsonBody := response[[]Pool]{}
+	jsonBody := Response[[]Pool]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
-		return nil, jsonErr
+		return Response[[]Pool]{}, jsonErr
 	}
-	return jsonBody.Data, nil
+	return jsonBody, nil
 }
 
 // NetworkToken retrieves the token for a specific network and address.
@@ -93,20 +93,20 @@ func (c *Client) NetworkTokenPools(network string, tokenAddress string, page int
 // Returns:
 //   - A Token struct, representing the token for the given address in the network.
 //   - An error if the GET request or the JSON unmarshalling fails.
-func (c *Client) NetworkToken(network string, address string) (Token, error) {
+func (c *Client) NetworkToken(network string, address string) (Response[Token], error) {
 	params := url.Values{}
 	params.Add("include", "top_pools")
 
 	body, err := c.get(fmt.Sprintf("networks/%s/tokens/%s/", network, address), params)
 	if err != nil {
-		return Token{}, err
+		return Response[Token]{}, err
 	}
-	jsonBody := response[Token]{}
+	jsonBody := Response[Token]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
-		return Token{}, jsonErr
+		return Response[Token]{}, jsonErr
 	}
-	return jsonBody.Data, nil
+	return jsonBody, nil
 }
 
 // NetworkTokensMultiAddress retrieves the tokens for a specific network and multiple addresses.
@@ -119,20 +119,20 @@ func (c *Client) NetworkToken(network string, address string) (Token, error) {
 // Returns:
 //   - A slice of Token structs, each representing a token for the given addresses in the network.
 //   - An error if the GET request or the JSON unmarshalling fails.
-func (c *Client) NetworkTokensMultiAddress(network string, addresses []string) ([]Token, error) {
+func (c *Client) NetworkTokensMultiAddress(network string, addresses []string) (Response[[]Token], error) {
 	params := url.Values{}
 	params.Add("include", "top_pools")
 
 	body, err := c.get(fmt.Sprintf("networks/%s/tokens/multi/%s", network, strings.Join(addresses, ",")), params)
 	if err != nil {
-		return nil, err
+		return Response[[]Token]{}, err
 	}
-	jsonBody := response[[]Token]{}
+	jsonBody := Response[[]Token]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
-		return nil, jsonErr
+		return Response[[]Token]{}, jsonErr
 	}
-	return jsonBody.Data, nil
+	return jsonBody, nil
 }
 
 // NetworkTokenInfo retrieves the token information for a specific network and address.
@@ -145,17 +145,17 @@ func (c *Client) NetworkTokensMultiAddress(network string, addresses []string) (
 // Returns:
 //   - A TokenInfo struct, representing the token information for the given address in the network.
 //   - An error if the GET request or the JSON unmarshalling fails.
-func (c *Client) NetworkTokenInfo(network string, address string) (TokenInfo, error) {
+func (c *Client) NetworkTokenInfo(network string, address string) (Response[TokenInfo], error) {
 	body, err := c.get(fmt.Sprintf("networks/%s/tokens/%s/info", network, address), nil)
 	if err != nil {
-		return TokenInfo{}, err
+		return Response[TokenInfo]{}, err
 	}
-	jsonBody := response[TokenInfo]{}
+	jsonBody := Response[TokenInfo]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
-		return TokenInfo{}, jsonErr
+		return Response[TokenInfo]{}, jsonErr
 	}
-	return jsonBody.Data, nil
+	return jsonBody, nil
 }
 
 // NetworkPoolTokenInfo retrieves the token information for a specific network and pool.
@@ -168,17 +168,17 @@ func (c *Client) NetworkTokenInfo(network string, address string) (TokenInfo, er
 // Returns:
 //   - A slice of TokenInfo structs, each representing the token information for the given pool in the network.
 //   - An error if the GET request or the JSON unmarshalling fails.
-func (c *Client) NetworkPoolTokenInfo(network string, poolAddress string) ([]TokenInfo, error) {
+func (c *Client) NetworkPoolTokenInfo(network string, poolAddress string) (Response[[]TokenInfo], error) {
 	body, err := c.get(fmt.Sprintf("networks/%s/pools/%s/info", network, poolAddress), nil)
 	if err != nil {
-		return nil, err
+		return Response[[]TokenInfo]{}, err
 	}
-	jsonBody := response[[]TokenInfo]{}
+	jsonBody := Response[[]TokenInfo]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
-		return nil, jsonErr
+		return Response[[]TokenInfo]{}, jsonErr
 	}
-	return jsonBody.Data, nil
+	return jsonBody, nil
 }
 
 // TokenInfoRecentlyUpdated retrieves the recently updated token information.
@@ -187,17 +187,17 @@ func (c *Client) NetworkPoolTokenInfo(network string, poolAddress string) ([]Tok
 // Returns:
 //   - A slice of TokenInfo structs, each representing a recently updated token.
 //   - An error if the GET request or the JSON unmarshalling fails.
-func (c *Client) TokenInfoRecentlyUpdated() ([]TokenInfo, error) {
+func (c *Client) TokenInfoRecentlyUpdated() (Response[[]TokenInfo], error) {
 	params := url.Values{}
 	params.Add("include", "network")
 	body, err := c.get("tokens/info_recently_updated", params)
 	if err != nil {
-		return nil, err
+		return Response[[]TokenInfo]{}, err
 	}
-	jsonBody := response[[]TokenInfo]{}
+	jsonBody := Response[[]TokenInfo]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
-		return nil, jsonErr
+		return Response[[]TokenInfo]{}, jsonErr
 	}
-	return jsonBody.Data, nil
+	return jsonBody, nil
 }

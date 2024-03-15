@@ -12,14 +12,14 @@ type Client struct {
 	httpClient *http.Client
 }
 
-type links struct {
+type Links struct {
 	First string `json:"first"`
 	Prev  string `json:"prev"`
 	Next  string `json:"next"`
 	Last  string `json:"last"`
 }
 
-type meta struct {
+type Meta struct {
 	Base struct {
 		Address         string `json:"address"`
 		Name            string `json:"name"`
@@ -34,18 +34,14 @@ type meta struct {
 	} `json:"quote"`
 }
 
-type data interface {
-	[]Network | []Dex | []Pool | []Trade | []Token | Pool | TokenPrice | Token | []TokenInfo | TokenInfo
+type DataTypes interface {
+	[]Network | []Dex | []Pool | []Trade | []Token | Pool | TokenPrice | Token | []TokenInfo | TokenInfo | OHLCVS
 }
 
-type response[T data] struct {
+type Response[T DataTypes] struct {
 	Data  T     `json:"data"`
-	Links links `json:"links"`
-}
-
-type responseOHLCVS struct {
-	Data OHLCVS `json:"data"`
-	Meta meta   `json:"meta"`
+	Links Links `json:"links"`
+	Meta  Meta  `json:"meta"`
 }
 
 func NewClient() *Client {

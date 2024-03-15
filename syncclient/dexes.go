@@ -25,17 +25,17 @@ type Dex struct {
 // Returns:
 //   - A slice of Dex structs, each representing a Dex in the network.
 //   - An error if the GET request or the JSON unmarshalling fails.
-func (c *Client) NetworkDexes(network string, page int) ([]Dex, error) {
+func (c *Client) NetworkDexes(network string, page int) (Response[[]Dex], error) {
 	params := url.Values{}
 	params.Add("page", strconv.Itoa(page))
 	body, err := c.get(fmt.Sprintf("networks/%s/dexes.go/", network), params)
 	if err != nil {
-		return nil, err
+		return Response[[]Dex]{}, err
 	}
-	jsonBody := response[[]Dex]{}
+	jsonBody := Response[[]Dex]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
-		return nil, jsonErr
+		return Response[[]Dex]{}, jsonErr
 	}
-	return jsonBody.Data, nil
+	return jsonBody, nil
 }

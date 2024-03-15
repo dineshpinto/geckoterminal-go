@@ -24,15 +24,15 @@ type TokenPrice struct {
 // Returns:
 //   - A TokenPrice struct, representing the token price for the given addresses in the network.
 //   - An error if the GET request or the JSON unmarshalling fails.
-func (c *Client) NetworkAddressesTokenPrice(network string, addresses []string) (TokenPrice, error) {
+func (c *Client) NetworkAddressesTokenPrice(network string, addresses []string) (Response[TokenPrice], error) {
 	body, err := c.get(fmt.Sprintf("simple/networks/%s/token_price/%s", network, strings.Join(addresses, ",")), nil)
 	if err != nil {
-		return TokenPrice{}, err
+		return Response[TokenPrice]{}, err
 	}
-	jsonBody := response[TokenPrice]{}
+	jsonBody := Response[TokenPrice]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
-		return TokenPrice{}, jsonErr
+		return Response[TokenPrice]{}, jsonErr
 	}
-	return jsonBody.Data, nil
+	return jsonBody, nil
 }

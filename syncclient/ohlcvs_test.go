@@ -9,9 +9,9 @@ func TestClient_NetworkPoolOHLCV(t *testing.T) {
 		PoolAddress: "0x60594a405d53811d3bc4766596efd80fd545a270",
 		Timeframe:   "day",
 	}
-	data, _ := gt.NetworkPoolOHLCV(args)
+	resp, _ := gt.NetworkPoolOHLCV(args)
 
-	if data.Type != "ohlcv_request_response" {
-		t.Error("Expected 'ohlcv_request_response', got", data.Type)
+	if resp.Data.Type != "ohlcv_request_response" {
+		t.Error("Expected 'ohlcv_request_response', got", resp.Data.Type)
 	}
 }

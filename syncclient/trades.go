@@ -40,17 +40,17 @@ type Trade struct {
 // Returns:
 //   - A slice of Trade structs, each representing a trade in the pool.
 //   - An error if the GET request or the JSON unmarshalling fails.
-func (c *Client) NetworkPoolTrades(network string, poolAddress string, tradeVolumeInUsdGreaterThan int) ([]Trade, error) {
+func (c *Client) NetworkPoolTrades(network string, poolAddress string, tradeVolumeInUsdGreaterThan int) (Response[[]Trade], error) {
 	params := url.Values{}
 	params.Add("trade_volume_in_usd_greater_than", strconv.Itoa(tradeVolumeInUsdGreaterThan))
 	body, err := c.get(fmt.Sprintf("networks/%s/pools/%s/trades", network, poolAddress), params)
 	if err != nil {
-		return nil, err
+		return Response[[]Trade]{}, err
 	}
-	jsonBody := response[[]Trade]{}
+	jsonBody := Response[[]Trade]{}
 	jsonErr := json.Unmarshal(body, &jsonBody)
 	if jsonErr != nil {
-		return nil, jsonErr
+		return Response[[]Trade]{}, jsonErr
 	}
-	return jsonBody.Data, nil
+	return jsonBody, nil
 }
