@@ -88,13 +88,13 @@ type Pool struct {
 				Id   string `json:"id"`
 				Type string `json:"type"`
 			} `json:"data"`
-		} `json:"Network"`
+		} `json:"network"`
 		Dex struct {
 			Data struct {
 				Id   string `json:"id"`
 				Type string `json:"type"`
 			} `json:"data"`
-		} `json:"Dex"`
+		} `json:"dex"`
 	} `json:"relationships"`
 }
 
