@@ -6,7 +6,6 @@
 
 Wrapper around the [GeckoTerminal](https://www.geckoterminal.com) DeFi and DeX
 aggregator operating across 90+ chains and 500+ dexes.
-Features both synchronous and asynchronous APIs.
 
 Features:
 
