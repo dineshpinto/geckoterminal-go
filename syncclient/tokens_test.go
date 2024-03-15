@@ -12,6 +12,14 @@ func TestClient_NetworkTokenPools(t *testing.T) {
 	}
 }
 
+func TestClient_NetworkToken(t *testing.T) {
+	c := NewClient()
+	data, _ := c.NetworkToken("eth", "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
+	if data.Type != "token" {
+		t.Error("Expected 'token', got", data.Type)
+	}
+}
+
 func TestClient_NetworkTokensMultiAddress(t *testing.T) {
 	c := NewClient()
 	data, _ := c.NetworkTokensMultiAddress("eth", []string{"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"})

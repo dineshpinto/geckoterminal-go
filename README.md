@@ -1,4 +1,5 @@
 [![Go](https://github.com/dineshpinto/geckoterminal-go/actions/workflows/go.yml/badge.svg)](https://github.com/dineshpinto/geckoterminal-go/actions/workflows/go.yml)
+[![codecov](https://codecov.io/gh/dineshpinto/geckoterminal-go/graph/badge.svg?token=PPR56W2NSI)](https://codecov.io/gh/dineshpinto/geckoterminal-go)
 
 # GeckoTerminal Go
 
