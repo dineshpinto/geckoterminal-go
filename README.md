@@ -19,7 +19,7 @@ find.
 ## Installation
 
 ```bash
-go install github.com/dineshpinto/geckoterminal-go
+go get github.com/dineshpinto/geckoterminal-go
 ```
 
 ## Examples
