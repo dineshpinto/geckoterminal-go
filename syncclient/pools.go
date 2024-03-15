@@ -75,25 +75,25 @@ type Pool struct {
 			Data struct {
 				Id   string `json:"id"`
 				Type string `json:"type"`
-			} `json:"DataTypes"`
+			} `json:"data"`
 		} `json:"base_token"`
 		QuoteToken struct {
 			Data struct {
 				Id   string `json:"id"`
 				Type string `json:"type"`
-			} `json:"DataTypes"`
+			} `json:"data"`
 		} `json:"quote_token"`
 		Network struct {
 			Data struct {
 				Id   string `json:"id"`
 				Type string `json:"type"`
-			} `json:"DataTypes"`
+			} `json:"data"`
 		} `json:"Network"`
 		Dex struct {
 			Data struct {
 				Id   string `json:"id"`
 				Type string `json:"type"`
-			} `json:"DataTypes"`
+			} `json:"data"`
 		} `json:"Dex"`
 	} `json:"relationships"`
 }

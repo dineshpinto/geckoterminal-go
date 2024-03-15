@@ -32,7 +32,7 @@ type Token struct {
 			Data []struct {
 				Id   string `json:"id"`
 				Type string `json:"type"`
-			} `json:"DataTypes"`
+			} `json:"data"`
 		} `json:"top_pools"`
 	} `json:"relationships"`
 }
