@@ -23,7 +23,7 @@ find.
 go get github.com/dineshpinto/geckoterminal-go
 ```
 
-## Examples
+## Usage
 
 ```go
 package main
@@ -52,9 +52,53 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Println(pools)
-	
+
 	// and many more...
 }
+```
+
+## Examples
+
+### Get list of supported networks
+
+```go
+networks, _ := gt.Networks(1)
+
+for _, network := range networks.Data {
+    fmt.println(network.Id, network.Attributes.CoingeckoAssetPlatformId)
+}
+
+```
+
+Output:
+```text
+eth ethereum
+bsc binance-smart-chain
+polygon_pos polygon-pos
+avax avalanche
+...
+```
+
+### Get list of trending pools on a network
+
+```go
+trending, _ := gt.NetworkTrendingPools("solana", 1)
+
+for _, pool := range trending.Data {
+    fmt.println(pool.Attributes.Name, pool.Attributes.BaseTokenPriceUsd, pool.Attributes.PriceChangePercentage.H24, pool.Attributes.VolumeUsd.H24)
+}
+```
+
+Output:
+```text
+BOME / SOL 0.0118312250522804 200.03 398924901.536168
+MONKEY / SOL 0.00000000233851081107242 422.12 328827.649694968
+PORTNOY / SOL 0.00113291211384906 -58.77 1751325.64299133
+PENG / SOL 0.850157764212865 -54.64 14786553.562191
+NINJA / SOL 0.0128840288743118 -2.39 2749158.88490154
+boden / SOL 0.130505062890272 -17.74 4908971.2246087
+$WIF / SOL 2.5686889316078 -20.82 30711940.7876968
+...
 ```
 
 ## Disclaimer
